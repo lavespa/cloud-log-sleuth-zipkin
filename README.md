@@ -1,2 +1,2 @@
 # cloud-log-sleuth-zipkin
-How to use Sleuth to add tracing information in logs.
+Come utilizzare Sleuth e Zipkin per aggiungere informazioni al tracing distribuito nei logs.
