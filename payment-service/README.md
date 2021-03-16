@@ -14,6 +14,6 @@ La property
 
       spring.zipkin.base-url = http://192.168.178.30:9411/
 
-presenta come host.docker.internal del container l'ip specificato
-Da modificare opportunamente in base al caso oppure definire un network
+presenta come host.docker.internal del container l'ip specificato,
+da modificare opportunamente in base al caso, oppure definire un network
 comune sui docker-compose dei componenti di tutti repository.
