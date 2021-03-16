@@ -1,0 +1,10 @@
+server:
+  port: 8091
+spring:
+  zipkin:
+    base-url: http://192.168.178.30:9411/
+  application:
+    name: order-service
+logging:
+  file:    name: C:/Work/tmp/logs/ordservice.log
+  

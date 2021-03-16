@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  payment-service-app-container:
+    image: payment-service-app:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /data/payment-service-app
+    ports:
+      - "8092:8092"
