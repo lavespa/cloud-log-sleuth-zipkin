@@ -7,7 +7,7 @@ Questo progetto è configurato per effettuare il running del microservizio
 payment-service con docker-compose.
 Quindi in sostanza basta lanciare:
 
-      $ docker-compose up
+      docker-compose up
 	  
 ## NOTE
 La property 
