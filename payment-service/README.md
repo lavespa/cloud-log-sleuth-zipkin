@@ -12,7 +12,7 @@ Quindi in sostanza basta lanciare:
 ## NOTE
 La property 
 
-   $ spring.zipkin.base-url = http://192.168.178.30:9411/
+      spring.zipkin.base-url = http://192.168.178.30:9411/
 
 presenta come host.docker.internal del container l'ip specificato
 Da modificare opportunamente in base al caso oppure definire un network
