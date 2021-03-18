@@ -81,6 +81,73 @@ spec:
 
 ```
 
+#### order-ms-services.yml
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-ms-ervice
+spec:
+  type: ClusterIP
+  selector:
+    app: order-ms
+  ports:
+  - port: 8091
+    targetPort: 8091
+```
+
+#### payment-ms-deployment.yml
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-ms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-ms
+  template:
+    metadata:
+      labels:
+        app: payment-ms
+    spec:
+      containers:
+      - name: payment-ms
+        image: intrieri/payment-ms:1.0.0
+        ports:
+        - containerPort: 8092
+        env:
+          - name: ZIPKIN_IP
+            value: zipkin-ms-service
+          - name: ZIPKING_PORT
+            value: '9411'
+```
+
+#### payment-ms-services.yml
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-ms-ervice
+spec:
+  type: ClusterIP
+  selector:
+    app: payment-ms
+  ports:
+  - port: 8092
+    targetPort: 8092
+```
+
+Abbiamo utilizzato ClusterIp come tipo specifico di servizio kubernetes. Questo tipo espone il servizio su un IP interno al cluster, 
+in questo modo il servizio è raggiungibile solo all’interno del cluster. Questo è il tipo di servizio predefinito.
+
+
+
+
+
        
 
    
