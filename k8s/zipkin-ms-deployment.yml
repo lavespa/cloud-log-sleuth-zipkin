@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipkin-ms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipkin
+  template:
+    metadata:
+      labels:
+        app: zipkin
+    spec:
+      containers:
+      - name: zipkin
+        image: openzipkin/zipkin
+        ports:
+        - containerPort: 9411
+        env:
+            # note: L'archiviazione in memoria conserva tutti i dati in memoria, 
+            #       eliminando i dati meno recenti in base a un limite di intervallo.
+            #       Sarà necessario utilizzare una memoria(storage db anche per esempio) 
+            #       adeguata negli ambienti di produzione        
+          - name: STORAGE_TYPE
+            value: mem

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /order
+            pathType: Prefix
+            backend:
+              service:
+                name: order-ms-ervice
+                port: 
+                  number: 8091
+          - path: /payment
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-ms-ervice
+                port: 
+                  number: 8092

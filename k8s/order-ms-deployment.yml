@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-ms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-ms
+  template:
+    metadata:
+      labels:
+        app: order-ms
+    spec:
+      containers:
+      - name: order-ms
+        image: intrieri/order-ms:1.0.0
+        ports:
+        - containerPort: 8091
+        env:
+          - name: ZIPKIN_IP
+            value: zipkin-ms-service
+          - name: ZIPKING_PORT
+            value: '9411'

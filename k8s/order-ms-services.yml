@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-ms-ervice
+spec:
+  type: ClusterIP
+  selector:
+    app: order-ms
+  ports:
+  - port: 8091
+    targetPort: 8091

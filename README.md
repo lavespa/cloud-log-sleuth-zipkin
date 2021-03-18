@@ -275,6 +275,26 @@ In pratica quindi avremo che:
 
 http://localhost/order/creaOrdine verrà risolta dall'Ingress Controller all'interno del Cluster con l'URL: http://order-ms-ervice:8091/creaOrdine.
 
+## APPLY CONFIGURATION
+A questo punto avendo riassunto tutti i file yml di configurazione su K8s, che troviamo sotto la cartella k8s della root di progetto, sarà
+necessario procedere semplicemente effettuando questi passaggi indicati nell'ordine:
+
+1) Installare l'ingress Nginx come indicato;
+
+2) Creiamo le immagini docker da inviare a K8s con:
+   docker build -t intrieri/order-ms:1.0.0 .
+   docker build -t intrieri/payment-ms:1.0.0 .
+
+2) posizionarsi sulla root di project e inviare a k8s la sola configurazione di Zipkin:
+   kubectl apply -f k8s/zipkin-ms-deployment.yml
+   kubectl apply -f k8s/zipkin-ms-service.yml
+
+3) Assicurandosi che il pod di Zipkin sia a running inviamo tutte le altre configurazioni in una sola volta con:
+   kubectl apply -f k8s/
+           
+
+
+
 
        
 
