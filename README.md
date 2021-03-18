@@ -144,6 +144,75 @@ spec:
 Abbiamo utilizzato ClusterIp come tipo specifico di servizio kubernetes. Questo tipo espone il servizio su un IP interno al cluster, 
 in questo modo il servizio è raggiungibile solo all’interno del cluster. Questo è il tipo di servizio predefinito.
 
+Infine andiamo a creare il file di deployment del nuovo Pod dove verrà eseguito Zipkin e il suo servizio relativo
+
+#### zipkin-ms-deployment.yml
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zipkin-ms-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zipkin
+  template:
+    metadata:
+      labels:
+        app: zipkin
+    spec:
+      containers:
+      - name: zipkin
+        image: openzipkin/zipkin
+        ports:
+        - containerPort: 9411
+        env:
+            # note: L'archiviazione in memoria conserva tutti i dati in memoria, 
+            #       eliminando i dati meno recenti in base a un limite di intervallo.
+            #       Sarà necessario utilizzare una memoria(storage db anche per esempio) 
+            #       adeguata negli ambienti di produzione        
+          - name: STORAGE_TYPE
+            value: mem
+```
+
+#### zipkin-ms-service.yml
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin-ms-service
+spec:
+  type: NodePort
+  selector:
+    app: zipkin
+  ports:
+  - port: 9411
+    targetPort: 9411
+    nodePort: 32766
+```
+
+Zipkinv è configurato per utilizzare il Db con modalità memory, ma è possibile configurarlo ad es. in produzione
+per utilizzare un Db storage vero e prorpio. Infine il servizio zipkin-ms-service è un service che è raggiungibile
+anche da fuori dal cluster(NodePort).
+Applicando le modifiche sia ai deployment che ai service definiti per il server Zipkin quest'ultimo sarà raggiungibile
+tramite la sua dashboard al seguente url: http://localhost:32766/zipkin
+
+## Ingress Controller
+
+Tutti i service che abbiamo definito sono di tipologia ClusterIp(predefinito) ed espongono quindi il servizio su 
+un IP che è all'interno del cluster e quindi ambedue i nostri microservizi non risultano raggiungibili al di 
+fuori del Cluster. E' necessario quindi rendere accessibili all'esterno le API dei microservizi order.service e 
+payment-service. Dobbiamo allora utilizzare una risorsa di K8s che si chiama Ingress il cui compito principale
+è proprio quello di esporre le routes HTTP e HTTPS dall'esterno del Cluster fino ai servizi all'interno del 
+Cluster. Il routing del traffico è inoltre controllato da regole definite nella nostra risorsa ingress.
+Il diagramma che rappresenta l'object Ingress di K8s che abbiamo implementato è qui rappresentato e conosciuto
+come configurazione "Fanout", cioè una configurazione che instrada il traffico da un singolo indirizzo IP a più 
+servizi, in base all'URI http richiesto.
+
+
 
 
 
