@@ -282,15 +282,18 @@ necessario procedere semplicemente effettuando questi passaggi indicati nell'ord
 1) Installare l'ingress Nginx come indicato;
 
 2) Creiamo le immagini docker da inviare a K8s con:
-   docker build -t intrieri/order-ms:1.0.0 .
-   docker build -t intrieri/payment-ms:1.0.0 .
+
+          docker build -t intrieri/order-ms:1.0.0 .
+          docker build -t intrieri/payment-ms:1.0.0 .
 
 2) posizionarsi sulla root di project e inviare a k8s la sola configurazione di Zipkin:
-   kubectl apply -f k8s/zipkin-ms-deployment.yml
-   kubectl apply -f k8s/zipkin-ms-service.yml
+   
+          kubectl apply -f k8s/zipkin-ms-deployment.yml
+          kubectl apply -f k8s/zipkin-ms-service.yml
 
 3) Assicurandosi che il pod di Zipkin sia a running inviamo tutte le altre configurazioni in una sola volta con:
-   kubectl apply -f k8s/
+   
+          kubectl apply -f k8s/
            
 
 
