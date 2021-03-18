@@ -212,14 +212,68 @@ Dobbiamo allora utilizzare una risorsa di K8s che si chiama Ingress il cui compi
 esporre le routes HTTP e HTTPS dall'esterno del Cluster fino ai servizi all'interno del Cluster. Il routing del 
 traffico è inoltre controllato da regole definite nella nostra risorsa ingress.
 Il diagramma che rappresenta l'object Ingress di K8s che abbiamo implementato è qui rappresentato e conosciuto
-come configurazione "Fanout", cioè una configurazione che instrada il traffico da un singolo indirizzo IP a più 
-servizi, in base all'URI http richiesto.
-
-<img width="880" tooltip="Diagram Ingress Controller" alt="Diagram Ingress Controller" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/Ingress.png">
+come configurazione "Fanout" (https://kubernetes.io/docs/concepts/services-networking/ingress), cioè una 
+configurazione che instrada il traffico da un singolo indirizzo IP a più servizi, in base all'URI http richiesto.
 
 
+<img width="880" alt="Diagram Ingress Controller" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/Ingress.png">
 
+Nella demo utilizzeremo [nginx Ingress](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html). Le istruzioni sul setup e 
+la documentazione si possono trovare ai seguenti link:
 
+* Setup: https://kubernetes.github.io/ingress-nginx/deploy/
+* Doc: https://kubernetes.github.io/ingress-nginx/
+
+Avendo utilizzato Windows come OS e avendo un cluster K8s generato con Docker Desktop è necessario lanciare il seguenete comando 
+sul repository delle images disponibili la cui ultima versione è proprio quella specificata nel docker, cioè al momento la 
+versione 0.34.0:
+
+                 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
+				 
+A questo punto si verifica l'installazione, cioè se i pod del controller di ingresso sono stati avviati come indicato nel link di 
+setup, con il comando:
+
+                 kubectl get pods -n ingress-nginx  -l app.kubernetes.io/name=ingress-nginx --watch
+
+Una volta che i pod del controller di ingresso sono in esecuzione, è possibile annullare la digitazione con il comando Ctrl+C.
+
+Terminata l'installazione di Ingress è necessario, come anticipato, configurare la route da applicare come nel diagramma descritto,
+inviando ad K8s la seguente configurazione:
+
+#### ingress-service.yml
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /order
+            pathType: Prefix
+            backend:
+              service:
+                name: order-ms-ervice
+                port: 
+                  number: 8091
+          - path: /payment
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-ms-ervice
+                port: 
+                  number: 8092
+```
+
+Come possiamo osservare abbiamo effettuato la configurazione dell'Ingress per fare in modo che tutte le request http che iniziato con
+prefix /order siano redirette al service del microservizio order-service e lo stesso dicasi per il microservizio payment-service.
+In pratica quindi avremo che:
+
+http://localhost/order/creaOrdine verrà risolta dall'Ingress Controller all'interno del Cluster con l'URL: http://order-ms-ervice:8091/creaOrdine.
 
 
        
