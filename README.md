@@ -215,7 +215,7 @@ Il diagramma che rappresenta l'object Ingress di K8s che abbiamo implementato è
 come configurazione "Fanout", cioè una configurazione che instrada il traffico da un singolo indirizzo IP a più 
 servizi, in base all'URI http richiesto.
 
-<img width="880" alt="Diagram Ingress Controller" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/Ingress.png">
+<img width="880" tooltip="Diagram Ingress Controller" alt="Diagram Ingress Controller" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/Ingress.png">
 
 
 
