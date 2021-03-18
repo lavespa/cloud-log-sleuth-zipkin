@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "77d5462a-5334-40bc-aeac-6e0d02095681",
+		"name": "SleuthZipkinLogs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "creaOrdine",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"order\":{\r\n\t\t\"id\":103,\r\n\t\t\"nome\":\"Mobile\",\r\n\t\t\"quantita\":1,\r\n\t\t\"prezzo\":8000\r\n\t\t\r\n\t},\r\n\t\"payment\":{}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.178.30:8091/order/creaOrdine",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"178",
+						"30"
+					],
+					"port": "8091",
+					"path": [
+						"order",
+						"creaOrdine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creaOrdineK8s",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"order\":{\r\n\t\t\"id\":103,\r\n\t\t\"nome\":\"Mobile\",\r\n\t\t\"quantita\":1,\r\n\t\t\"prezzo\":8000\r\n\t\t\r\n\t},\r\n\t\"payment\":{}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8091/order/creaOrdine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"order",
+						"creaOrdine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creaPaymentK8s",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"order\":{\r\n\t\t\"id\":103,\r\n\t\t\"nome\":\"Mobile\",\r\n\t\t\"quantita\":1,\r\n\t\t\"prezzo\":8000\r\n\t\t\r\n\t},\r\n\t\"payment\":{}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8091/order/creaOrdine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"order",
+						"creaOrdine"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
