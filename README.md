@@ -31,6 +31,8 @@ A seguire le operazioni salienti che esso compie:
 
 A titolo di esempio allego un immagine che rende molto l'idea:
 
+<img width="880" alt="Diagram TraceId con Sleuth" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/tracing_sleuth.png">
+
 ## ZIPKIN
 
 Zipkin è un componente sw open source che ci permette di inviare, ricevere, archiviare e visualizzare i dettagli delle trace 
@@ -204,13 +206,16 @@ tramite la sua dashboard al seguente url: http://localhost:32766/zipkin
 
 Tutti i service che abbiamo definito sono di tipologia ClusterIp(predefinito) ed espongono quindi il servizio su 
 un IP che è all'interno del cluster e quindi ambedue i nostri microservizi non risultano raggiungibili al di 
-fuori del Cluster. E' necessario quindi rendere accessibili all'esterno le API dei microservizi order.service e 
-payment-service. Dobbiamo allora utilizzare una risorsa di K8s che si chiama Ingress il cui compito principale
-è proprio quello di esporre le routes HTTP e HTTPS dall'esterno del Cluster fino ai servizi all'interno del 
-Cluster. Il routing del traffico è inoltre controllato da regole definite nella nostra risorsa ingress.
+fuori del Cluster. 
+E' necessario quindi rendere accessibili all'esterno le API dei microservizi order.service e payment-service. 
+Dobbiamo allora utilizzare una risorsa di K8s che si chiama Ingress il cui compito principale è proprio quello di 
+esporre le routes HTTP e HTTPS dall'esterno del Cluster fino ai servizi all'interno del Cluster. Il routing del 
+traffico è inoltre controllato da regole definite nella nostra risorsa ingress.
 Il diagramma che rappresenta l'object Ingress di K8s che abbiamo implementato è qui rappresentato e conosciuto
 come configurazione "Fanout", cioè una configurazione che instrada il traffico da un singolo indirizzo IP a più 
 servizi, in base all'URI http richiesto.
+
+<img width="880" alt="Diagram Ingress Controller" src="https://github.com/lavespa/cloud-log-sleuth-zipkin/blob/main/image/Ingress.png">
 
 
 
